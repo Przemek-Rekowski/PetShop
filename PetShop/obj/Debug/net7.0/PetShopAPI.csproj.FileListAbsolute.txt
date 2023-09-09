@@ -1,0 +1,6 @@
+C:\Users\Komp\source\repos\CarRental\PetShop\PetShop\obj\Debug\net7.0\PetShopAPI.csproj.AssemblyReference.cache
+C:\Users\Komp\source\repos\CarRental\PetShop\PetShop\obj\Debug\net7.0\PetShopAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Komp\source\repos\CarRental\PetShop\PetShop\obj\Debug\net7.0\PetShopAPI.AssemblyInfoInputs.cache
+C:\Users\Komp\source\repos\CarRental\PetShop\PetShop\obj\Debug\net7.0\PetShopAPI.AssemblyInfo.cs
+C:\Users\Komp\source\repos\CarRental\PetShop\PetShop\obj\Debug\net7.0\PetShopAPI.csproj.CoreCompileInputs.cache
+C:\Users\Komp\source\repos\CarRental\PetShop\PetShop\obj\Debug\net7.0\PetShopAPI.MvcApplicationPartsAssemblyInfo.cache
