@@ -24,10 +24,9 @@ public class CheckoutController : ControllerBase
     public async Task<ActionResult> CheckoutOrder([FromBody] Product product, [FromServices] IServiceProvider sp)
     {
 
-        var checkoutOrderResponse = _checkoutService.Order(product, sp);
+        var checkoutOrderResponse = await _checkoutService.Order(product, sp);
 
         return Ok(checkoutOrderResponse);
-
     }
 
     [HttpGet("success")]

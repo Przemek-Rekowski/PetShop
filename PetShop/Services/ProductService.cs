@@ -4,6 +4,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PetShopAPI.Data;
 using PetShopAPI.Entities;
+using PetShopAPI.Exceptions;
 using PetShopAPI.Models;
 using System;
 
@@ -43,6 +44,9 @@ public class ProductService : IProductService
             .Products
             .FirstOrDefault(p => p.Id == id);
 
+        if (product is null)
+            throw new NotFoundException("product not found");
+
         _dbContext.Remove(product);
 
         _dbContext.SaveChanges();
@@ -53,6 +57,9 @@ public class ProductService : IProductService
         var product = _dbContext
             .Products
             .FirstOrDefault(c => c.Id == id);
+
+        if (product is null)
+            throw new NotFoundException("product not found");
 
         return product;
     }
@@ -68,6 +75,9 @@ public class ProductService : IProductService
         var product = _dbContext
             .Products
             .FirstOrDefault(r => r.Id == id);
+
+        if (product is null)
+            throw new NotFoundException("product not found");
 
         product.Title = dto.Title;
         product.Description = dto.Description;
