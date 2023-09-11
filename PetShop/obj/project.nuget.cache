@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "brGDGHdx4WBqv/NfvjCtejBQX2KAjxAPRebr7ahN1zigE2H+yAbOiF/4nKCT2hgL9bQ2stuWJKztRhXQ0l8UPA==",
+  "dgSpecHash": "iMVmpopa23oBJr0F3lA4A/oWnVn2i1ZyJZmKmFwHNC4DH+nKu3I+CoVLfjKScrh1szcwDLrWBg5LEj8wWRcT1w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Komp\\source\\repos\\CarRental\\PetShop\\PetShop\\PetShopAPI.csproj",
+  "projectFilePath": "C:\\Users\\Komp\\source\\repos\\PetShop\\PetShop\\PetShopAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Komp\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Komp\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

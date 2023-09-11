@@ -7,7 +7,7 @@ using Stripe.Checkout;
 namespace Server.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/checkout")]
 [ApiExplorerSettings(IgnoreApi = true)]
 public class CheckoutController : ControllerBase
 {

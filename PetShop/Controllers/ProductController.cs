@@ -1,58 +1,54 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PetShopAPI.Entities;
+using PetShopAPI.Models;
 
-namespace Server.Controllers;
-[ApiController]
-[Route("[controller]")]
-public class ProductsController : ControllerBase
+namespace Server.Controllers
 {
-    private readonly IProductService _productService;
-
-    public ProductsController(IProductService productService)
+    [ApiController]
+    [Route("api")]
+    public class ProductsController : ControllerBase
     {
-        _productService = productService;
-    }
+        private readonly IProductService _productService;
 
-    [HttpPost]
-    public async Task<IActionResult> Create(Product productToCreate)
-    {
-        _productService.CreateProduct(productToCreate);
+        public ProductsController(IProductService productService)
+        {
+            _productService = productService;
+        }
 
-        return Ok();
-    }
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductDto dto)
+        {
+            var id = await _productService.Create(dto);
+            return Created($"/api/{id}", null);
+        }
 
-    [HttpGet]
-    public async Task<IEnumerable<Product>> GetAll()
-    {
-        var products = _productService.GetProducts();
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var products = await _productService.GetAll();
+            return Ok(products);
+        }
 
-        return Ok(products);
-    }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(string id)
+        {
+            var product = await _productService.GetById(id);
+            return Ok(product);
+        }
 
-    [HttpGet]
-    [Route("{id}")]
-    public async Task<Product> GetById(string id)
-    {
-        var product = _productService.GetProductById(id);
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateProduct(string id, UpdateProductDto dto)
+        {
+            _productService.Update(id, dto);
+            return Ok();
+        }
 
-        return Ok(product);
-    }
-
-    [HttpPut]
-    public async Task<IActionResult> Update(Product updatedProduct)
-    {
-        _productService.UpdateProduct(updatedProduct);
-
-        return Ok();
-    }
-
-    [HttpDelete]
-    [Route("{id}")]
-    public async Task<IActionResult> Delete(string id)
-    {
-        _productService.DeleteProduct(id);
-
-        return NoContent();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(string id)
+        {
+            _productService.Delete(id);
+            return NoContent();
+        }
     }
 }
