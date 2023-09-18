@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "iMVmpopa23oBJr0F3lA4A/oWnVn2i1ZyJZmKmFwHNC4DH+nKu3I+CoVLfjKScrh1szcwDLrWBg5LEj8wWRcT1w==",
+  "dgSpecHash": "1edMPh77PFxWGJIsdNxPmEKz4l/4dt5DfevYszuA8H+UzLR+snCxn8H4STfEAdDBKFAvlC1QIwC8cH3l2Yqpww==",
   "success": true,
   "projectFilePath": "C:\\Users\\Komp\\source\\repos\\PetShop\\PetShop\\PetShopAPI.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "C:\\Users\\Komp\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
     "C:\\Users\\Komp\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "C:\\Users\\Komp\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\Komp\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.11\\microsoft.aspnetcore.authentication.jwtbearer.7.0.11.nupkg.sha512",
     "C:\\Users\\Komp\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Komp\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Komp\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.2\\microsoft.data.sqlclient.5.0.2.nupkg.sha512",

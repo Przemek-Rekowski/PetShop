@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Hosting.Server;
-using PetShopAPI.Entities;
 using Stripe.Checkout;
+using PetShopAPI.Models;
 
 public interface ICheckoutService
 {

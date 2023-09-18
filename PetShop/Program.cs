@@ -3,6 +3,12 @@ using Stripe;
 using PetShopAPI.Data;
 using System.Reflection;
 using PetShopAPI.Middleware;
+using PetShopAPI.Services;
+using Microsoft.AspNetCore.Identity;
+using PetShopAPI.Entities;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using PetShopAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +32,8 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 builder.Services.AddControllers();
@@ -34,6 +42,28 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<PetShopDbContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("PetShopDbConnection")));
+
+var authentication = new Authentication();
+
+builder.Configuration.GetSection("Authentication").Bind(authentication);
+
+builder.Services.AddSingleton(authentication);
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(cfg =>
+{
+    cfg.RequireHttpsMetadata = false;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = authentication.JwtIssuer,
+        ValidAudience = authentication.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authentication.JwtKey)),
+    };
+});
 
 var app = builder.Build();
 
@@ -48,6 +78,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseAuthentication();
 app.UseHttpsRedirection();
 
 app.UseCors();

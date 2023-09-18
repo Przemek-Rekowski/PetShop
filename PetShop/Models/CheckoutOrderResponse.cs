@@ -1,4 +1,4 @@
-﻿namespace PetShopAPI.Entities;
+﻿namespace PetShopAPI.Models;
 public class CheckoutOrderResponse
 {
     public string? SessionId { get; set; }
