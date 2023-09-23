@@ -14,6 +14,8 @@ namespace PetShopAPI
 
             CreateMap<UpdateProductDto, Product>()
                 .ReverseMap();
+
+            CreateMap<Cart, CartDto>();
         }
     }
 }

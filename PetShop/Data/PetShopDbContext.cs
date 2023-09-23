@@ -12,9 +12,10 @@ namespace PetShopAPI.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {   
             const int amountOfProductsToSeed = 20;
 
             var productsToSeed = new Product[amountOfProductsToSeed];
@@ -32,6 +33,7 @@ namespace PetShopAPI.Data
             }
 
             modelBuilder.Entity<Product>().HasData(productsToSeed);
+            modelBuilder.Entity<Cart>(c => c.HasNoKey());
         }
     }
 }

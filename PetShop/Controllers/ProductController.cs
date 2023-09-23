@@ -16,14 +16,14 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateProductDto dto)
+        public async Task<IActionResult> CreateProduct(CreateProductDto dto)
         {
             var id = await _productService.Create(dto);
             return Created($"/api/{id}", null);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAllProducts()
         {
             var products = await _productService.GetAll();
             return Ok(products);
