@@ -6,6 +6,7 @@ using PetShopAPI.Data;
 using PetShopAPI.Entities;
 using PetShopAPI.Exceptions;
 using PetShopAPI.Models;
+using PetShopAPI.Services;
 using System;
 
 public interface ICartService
@@ -20,23 +21,31 @@ public class CartService : ICartService
 {
     private readonly PetShopDbContext _dbContext;
     private readonly IMapper _mapper;
+    private readonly IUserContextService _userContext;
 
-    public CartService(PetShopDbContext dbContext, IMapper mapper)
+    public CartService(PetShopDbContext dbContext, IMapper mapper, IUserContextService userContext)
     {
         _dbContext = dbContext;
         _mapper = mapper;
+        _userContext = userContext;
     }
 
     public async void Add(Product product)
     {
-        var cart = new Cart()
+        var userId = _userContext.GetUserId;
+        if (userId.HasValue)
         {
-            ProductId = product.Id,
-            UserId = 1 //test
-        };
+            var cart = new Cart()
+            {
+                ProductId = product.Id,
+                UserId = userId.Value
+            };
 
-        await _dbContext.AddAsync(cart);
-        await _dbContext.SaveChangesAsync();
+            await _dbContext.AddAsync(cart);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        else throw new NotFoundException("user not found");
     }
 
     public async Task<IEnumerable<Cart>> GetCart()
