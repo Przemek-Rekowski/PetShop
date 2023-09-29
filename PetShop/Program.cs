@@ -9,6 +9,11 @@ using PetShopAPI.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PetShopAPI;
+using FluentValidation;
+using RestaurantAPI.Models;
+using PetShopAPI.Models.Validation;
+using FluentValidation.AspNetCore;
+using PetShopAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +34,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddControllers().AddFluentValidation();
 
+builder.Services.AddScoped<IValidator<ProductQuery>, ProductQueryValidation>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -37,7 +44,6 @@ builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwaggerGen();

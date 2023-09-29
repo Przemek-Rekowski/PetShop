@@ -6,13 +6,15 @@ using PetShopAPI.Data;
 using PetShopAPI.Entities;
 using PetShopAPI.Exceptions;
 using PetShopAPI.Models;
+using RestaurantAPI.Models;
 using System;
+using System.Linq.Expressions;
 
 public interface IProductService
 {
     Task<string> Create(CreateProductDto dto);
-    Task<IEnumerable<Product>> GetAll();
-    Task<Product> GetById(string id);
+    PagedResult<ProductDto> GetAll(ProductQuery query);
+    Task<ProductDto> GetById(string id);
     void Update(string id, UpdateProductDto dto);
     void Delete(string id);
 }
@@ -52,7 +54,7 @@ public class ProductService : IProductService
         _dbContext.SaveChanges();
     }
 
-    public async Task<Product> GetById(string id)
+    public async Task<ProductDto> GetById(string id)
     {
         var product = _dbContext
             .Products
@@ -61,13 +63,46 @@ public class ProductService : IProductService
         if (product is null)
             throw new NotFoundException("product not found");
 
-        return product;
+        var result = _mapper.Map<ProductDto>(product);
+        return result;
     }
 
-    public async Task<IEnumerable<Product>> GetAll()
+    public PagedResult<ProductDto> GetAll(ProductQuery query)
     {
-        var product = await _dbContext.Products.ToListAsync();
-        return product;
+        var baseQuery = _dbContext
+            .Products
+            .Where(p => query.SearchPhrase == null || (p.Title.ToLower().Contains(query.SearchPhrase.ToLower())
+                                                       || p.Description.ToLower()
+                                                           .Contains(query.SearchPhrase.ToLower())));
+
+        if (!string.IsNullOrEmpty(query.SortBy))
+        {
+            var columnsSelectors = new Dictionary<string, Expression<Func<Product, object>>>
+                {
+                    { nameof(Product.Title), r => r.Title },
+                    { nameof(Product.Description), r => r.Description },
+                    { nameof(Product.Price), r => r.Price },
+                };
+
+            var selectedColumn = columnsSelectors[query.SortBy];
+
+            baseQuery = query.SortDirection == SortDirection.ASC
+                ? baseQuery.OrderBy(selectedColumn)
+                : baseQuery.OrderByDescending(selectedColumn);
+        }
+
+        var products = baseQuery
+            .Skip(query.PageSize * (query.PageNumber - 1))
+            .Take(query.PageSize)
+            .ToList();
+
+        var totalItemsCount = baseQuery.Count();
+
+        var productDtos = _mapper.Map<List<ProductDto>>(products);
+
+        var result = new PagedResult<ProductDto>(productDtos, totalItemsCount, query.PageSize, query.PageNumber);
+
+        return result;
     }
 
     public async void Update(string id, UpdateProductDto dto)

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using PetShopAPI.Entities;
 using PetShopAPI.Models;
-using System;
 
 namespace PetShopAPI
 {
@@ -9,11 +8,13 @@ namespace PetShopAPI
     {
         public PetShopMappingProfile()
         {
-            CreateMap<CreateProductDto, Product>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid().ToString()));
+            CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.Available, opt => opt.MapFrom(src => src.Quantity > 0));
 
-            CreateMap<UpdateProductDto, Product>()
-                .ReverseMap();
+            CreateMap<CreateProductDto, Product>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<UpdateProductDto, Product>().ReverseMap();
 
             CreateMap<Cart, CartDto>();
         }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PetShopAPI.Entities;
 using PetShopAPI.Models;
+using RestaurantAPI.Models;
 
 namespace Server.Controllers
 {
@@ -23,9 +23,9 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public ActionResult<IEnumerable<ProductDto>> GetAllProducts([FromQuery] ProductQuery query)
         {
-            var products = await _productService.GetAll();
+            var products =  _productService.GetAll(query);
             return Ok(products);
         }
 
