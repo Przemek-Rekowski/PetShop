@@ -19,6 +19,9 @@ namespace PetShopAPI.Models.Validation
             RuleFor(p => p.Quantity)
                 .NotEmpty()
                 .GreaterThan(0);
+
+            RuleFor(p => p.CategoryId)
+                .NotEmpty();
         }
     }
 }

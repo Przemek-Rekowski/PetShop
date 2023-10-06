@@ -9,7 +9,7 @@ namespace PetShopAPI
         public PetShopMappingProfile()
         {
             CreateMap<Product, ProductDto>()
-                .ForMember(dest => dest.Available, opt => opt.MapFrom(src => src.Quantity > 0));
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name));
 
             CreateMap<CreateProductDto, Product>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());

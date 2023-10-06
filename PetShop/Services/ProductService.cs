@@ -71,9 +71,11 @@ public class ProductService : IProductService
     {
         var baseQuery = _dbContext
             .Products
-            .Where(p => query.SearchPhrase == null || (p.Title.ToLower().Contains(query.SearchPhrase.ToLower())
-                                                       || p.Description.ToLower()
-                                                           .Contains(query.SearchPhrase.ToLower())));
+            .Where(p => (query.CategoryId == null || p.CategoryId == query.CategoryId) &&
+                        (query.SearchPhrase == null ||
+                         (p.Title.ToLower().Contains(query.SearchPhrase.ToLower()) ||
+                          p.Description.ToLower().Contains(query.SearchPhrase.ToLower()))));
+
 
         if (!string.IsNullOrEmpty(query.SortBy))
         {
@@ -119,6 +121,7 @@ public class ProductService : IProductService
         product.ImageUrl = dto.ImageUrl;
         product.Price = dto.Price;
         product.Quantity = dto.Quantity;
+        product.CategoryId = dto.CategoryId;
 
         _dbContext.SaveChanges();
     }
